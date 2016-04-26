@@ -8,6 +8,7 @@ import com.weixinFPR.weixinInterface.services.WeixinService
  */
 class WeixinServiceActor extends Actor with WeixinService{
 
+  //create_test
   def actorRefFactory = context
 
   override def receive: Receive = runRoute(weixinRoute)
