@@ -15,7 +15,7 @@ object Boot extends App{
   val weixinService = system.actorOf(Props[WeixinServiceActor],"weixin-actor")
 
 
-  val sysIp = system.settings.config.getValue("service.host").render.toString
+//  val sysIp = system.settings.config.getValue("service.host").render.toString
 
   val port = system.settings.config.getValue("service.port").render.toInt
 
