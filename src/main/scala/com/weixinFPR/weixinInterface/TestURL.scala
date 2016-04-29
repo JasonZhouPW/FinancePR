@@ -11,7 +11,7 @@ case class Product(name:String,rate:String,period:String,investFrom:String,detai
 object TestURL extends App{
   import org.jsoup.Jsoup
 
-  val doc =  Jsoup.connect("https://list.lu.com/list/dingqi").get()
+ /* val doc =  Jsoup.connect("https://list.lu.com/list/dingqi").get()
 
   val lb = new ListBuffer[Product]
   val test = doc.select("li.product-list.clearfix")
@@ -27,6 +27,19 @@ object TestURL extends App{
      new Product(name,rate,if(period.isSuccess)period.get else "No value" ,investFrom,detailUrl)
   }
 
-  products.foreach(println)
+  products.foreach(println)*/
 
+
+  val doc =  Jsoup.connect("http://bill.jr.jd.com/buy/list.htm").get()
+  val nodes = doc.select("div.bill-info")
+  val products = (0 until nodes.size).map{i =>
+    val tmpNode = nodes.get(i)
+    val name = tmpNode.select("h3.bill-goods-name").text()
+    val rate = tmpNode.select("b.income-precent").text
+    val period = tmpNode.select("b.bill-normal").get(1).text
+
+    new Product(name,rate,period,"0","")
+  }
+
+  products.foreach(println)
 }
