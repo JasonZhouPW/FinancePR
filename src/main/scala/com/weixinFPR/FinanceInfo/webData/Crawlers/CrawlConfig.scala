@@ -7,9 +7,13 @@ import java.net.URL
  */
 trait CrawlConfig {
 
-  def getRootUrl:URL
+  def getRootUrl:String
 }
 
 trait LUCrawlConfig extends CrawlConfig{
-  override def getRootUrl:URL = new URL("http://licai.jd.com/")
+  override def getRootUrl:String = "https://list.lu.com/list/dingqi"
+}
+
+trait JDCrawConfig extends CrawlConfig{
+  override def getRootUrl:String = "http://licai.jd.com/"
 }
