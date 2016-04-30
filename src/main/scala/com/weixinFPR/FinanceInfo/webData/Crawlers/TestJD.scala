@@ -8,4 +8,5 @@ object TestJD extends App{
   val jdCrawler = new JDWebCrawler
   val products = jdCrawler.getProductList("http://bill.jr.jd.com/buy/list.htm")
   products.foreach(println)
+
 }
