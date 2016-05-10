@@ -15,5 +15,5 @@ class FinanceProduct(name:String,
 
 
 
-  override def toString = s"[name=$this.name,rate=$this.rate,period=$this.period,investFrom=$this.investFrom,detailURl=$this.detailURl]"
+  override def toString = s"[name=$name,rate=$rate,period=$period,investFrom=$investFrom,detailURl=$detailURl]"
 }
