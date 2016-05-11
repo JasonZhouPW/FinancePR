@@ -17,8 +17,8 @@ object Boot extends App{
 
 //  val sysIp = system.settings.config.getValue("service.host").render.toString
 
-  val port = system.settings.config.getValue("service.port").render.toInt
+//  val port = system.settings.config.getValue("service.port").render.toInt
 
-  IO(Http) ! Http.Bind(weixinService,"localhost",port=port)
+  IO(Http) ! Http.Bind(weixinService,"localhost",port=8080)
 
 }

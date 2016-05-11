@@ -2,29 +2,37 @@ package com.weixinFPR.weixinInterface.services
 
 import com.weixinFPR.FinanceInfo.webData.Crawlers.{JDWebCrawler, LUWebCrawler}
 import spray.routing.HttpService
-
+import scala.xml.XML._
 /**
  * Created by Zhoupeiwen on 2016/4/26.
  */
-trait WeixinService extends HttpService{
+trait WeixinService extends HttpService with ScalateService{
 
   val weixinRoute = {
     get {
       pathSingleSlash {
-        complete(index)
+        complete(indexHtml)
       } ~
       path("lulist"){
-        complete(lulist)
+        complete(luListHtml)
       } ~
       path("jdlist"){
-        complete(jdlist)
+        complete(jdListHtml)
       }
 
     }
   }
 
+  val indexAttr = Map(
+    "title" -> "title",
+    "list" -> List(Map("url" -> """/lulist""","site" -> "lu"),
+                  Map("url" -> """/jdlist""","site" -> "jd"))
+  )
 
-  lazy val index =
+  lazy val indexHtml = loadString(getHtml("index.html",indexAttr))
+
+
+/*  lazy val index =
     <html>
       <body>
         <h1>hello world!</h1>
@@ -33,14 +41,20 @@ trait WeixinService extends HttpService{
           <li><a href="/jdlist">jd</a></li>
         </ul>
       </body>
-    </html>
+    </html>*/
 
 
 
   lazy val luCrawler = new LUWebCrawler
   val products = luCrawler.getProductList("https://list.lu.com/list/dingqi")
 
-  lazy val lulist =
+  val luAttr =Map("productList"-> products.map(p => Map("name" -> p.name,
+                                                "rate" -> p.rate,
+                                                "period" -> p.period,
+                                                "investfrom" -> p.investFrom)))
+  lazy val luListHtml = loadString(getHtml("productList.html",luAttr))
+
+  /*lazy val lulist =
     <html>
       <body>
         <h1>list from LU</h1>
@@ -51,10 +65,18 @@ trait WeixinService extends HttpService{
 
       </body>
     </html>
-
+*/
   lazy val jdCrawler = new JDWebCrawler
   val jdProducts = jdCrawler.getProductList("http://bill.jr.jd.com/buy/list.htm")
 
+  val jdAttr =Map("productList"-> jdProducts.map(p => Map("name" -> p.name,
+                                      "rate" -> p.rate,
+                                      "period" -> p.period,
+                                      "investfrom" -> p.investFrom)))
+  lazy val jdListHtml = loadString(getHtml("productList.html",jdAttr))
+
+
+/*
   lazy val jdlist =
     <html>
       <body>
@@ -66,6 +88,7 @@ trait WeixinService extends HttpService{
 
       </body>
     </html>
+*/
 
 
 }

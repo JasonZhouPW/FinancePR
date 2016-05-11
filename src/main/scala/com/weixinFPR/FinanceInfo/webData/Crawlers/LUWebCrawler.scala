@@ -24,7 +24,9 @@ class LUWebCrawler extends WebCrawler with LUCrawlConfig {
       val period = Try(tmp.select(c_periodCss).get(0).text)
       val investFrom =tmp.select(c_investFromCss).get(0).text
 
-      new FinanceProduct(name,rate.replace("%","").toDouble,if(period.isSuccess)period.get else "No value" ,investFrom.replace(",","").toDouble,detailUrl)
+      val newRate = if(rate.contains("~"))rate.split("~")(0) else rate
+
+      new FinanceProduct(name,newRate.replace("%","").toDouble,if(period.isSuccess)period.get else "No value" ,investFrom.replace(",","").toDouble,detailUrl)
     }
 
     products.toList

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JD List</title>
+</head>
+<body>
+    <h1>product list</h1>
+    <table border ="8">
+        <tr><th>name</th><th>rate</th><th>period</th><th>investfrom</th></tr>
+        {{#productList}}
+        <tr><td>{{name}}</td><td>{{rate}}</td><td>{{period}}</td><td>{{investfrom}}</td></tr>
+        {{/productList}}
+    </table>
+</body>
+</html>

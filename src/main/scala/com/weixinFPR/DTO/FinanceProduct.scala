@@ -5,7 +5,7 @@ import scala.beans.BeanProperty
 /**
  * Created by Zhoupeiwen on 2016/4/29.
  */
-class FinanceProduct(name:String,
+case class FinanceProduct(name:String,
                      rate:Double,
                      period:String,
                      investFrom:Double,
